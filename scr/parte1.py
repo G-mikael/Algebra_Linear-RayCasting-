@@ -12,7 +12,7 @@ def game():
     pg.init()
     screen = pg.display.set_mode((1280, 720))
     pg.display.set_caption('Yuri me da 10 pfv')
-    #limitando o fps 
+    #limitando o fps usando o pg.time.Clock
     clock = pg.time.Clock()
     running = True
     res_horizontal = 216
@@ -54,20 +54,24 @@ def game():
         pg.display.update()
         
         posx, posy, rot = movimentacao(posx, posy, rot, pg.key.get_pressed())
+        #Número máximo de fps
         clock.tick(60)
     pg.quit()
     exit()
 
 def movimentacao(posx, posy, rot, keys):
+    #A e D diminuem e aumentam a rotação respectivamente
     if keys[ord('a')]:
         rot = rot - 0.08
 
     if keys[ord('d')]:
         rot = rot + 0.08
     
+    #W soma o cosseno da rotação à posição x e o seno da rotação à posição y
     if keys[ord('w')]:
         posx, posy = posx + np.cos(rot)*0.12, posy + np.sin(rot)*0.12
 
+    #S diminui o cosseno da rotação à posição x e o seno da rotação à posição y
     if keys[ord('s')]:
         posx, posy = posx - np.cos(rot)*0.12, posy - np.sin(rot)*0.12
     
