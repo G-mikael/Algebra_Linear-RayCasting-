@@ -26,14 +26,27 @@ def game():
     frame = np.random.uniform(0,1, (res_horizontal, half_res_vertical*2, 3))
 
     #mapa
-    tamanho = 6
-    mapa = np.random.choice([0,0,0,0,0,1], (tamanho, tamanho))
+    tamanho = 12
+    mapa = (
+        [1,1,2,2,1,0,1,1,2,2,1,1], 
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1])
 
     #texturas
-    ceu = pg.image.load('textures/sky.png')
+    ceu = pg.image.load('textures/sky2.png')
     ceu = pg.surfarray.array3d(pg.transform.scale(ceu, (360, half_res_vertical*2)))
     floor = pg.surfarray.array3d(pg.image.load('textures/floor2.png'))
-    wall = pg.surfarray.array3d(pg.image.load('textures/wall.png'))
+    wall = pg.surfarray.array3d(pg.image.load('textures/wall3.png'))
+    wall2 = pg.surfarray.array3d(pg.image.load('textures/wall2.jpg'))
 
 
     while running:
@@ -41,7 +54,7 @@ def game():
             if event.type == pg.QUIT:
                 running = False
         
-        frame = numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall)
+        frame = numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2)
 
         surf = pg.surfarray.make_surface(frame*255)
         surf = pg.transform.scale(surf, (1280, 720))
@@ -75,7 +88,7 @@ def movimentacao(posx, posy, rot, keys):
 
 #otimizaçao do código usando numba (faz milagre essa porra)
 @njit()
-def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall):
+def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2):
     for i in range(res_horizontal):
             rot_i = rot + np.deg2rad(i/fov - 30)
             sin, cos, cos_correcao = np.sin(rot_i), np.cos(rot_i), np.cos(np.deg2rad(i/fov - 30))
@@ -85,15 +98,25 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                 n = (half_res_vertical/(half_res_vertical-j))/cos_correcao
                 x, y = posx + cos*n, posy + sin*n
                 xfloor, yfloor = int(x*2%1*300), int(y*2%1*300)
-            
-                if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)]:
+
+                if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 1:
                     h = half_res_vertical - j
-                    if x%1<0.02 or x%1>0.98:
+                    if x%1<0.1 or x%1>0.9:
                         xfloor = yfloor
-                    yfloor = np.linspace(0,198, h*2)%99
+                    yfloor = np.linspace(0,640, h*2)%640
 
                     for k in range(h*2):
                         frame[i][half_res_vertical - h + k] = wall[xfloor][int(yfloor[k])]/255
+                    break
+
+                if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 2:
+                    h = half_res_vertical - j
+                    if x%1<0.1 or x%1>0.9:
+                        xfloor = yfloor
+                    yfloor = np.linspace(0,2000, h*2)%2000
+
+                    for k in range(h*2):
+                        frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
                     break
                 else:
                     frame[i][half_res_vertical*2-j-1] = floor[xfloor][yfloor]/255
