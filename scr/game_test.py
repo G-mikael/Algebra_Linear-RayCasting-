@@ -59,10 +59,10 @@ def game():
     ceu = pg.image.load('textures/sky2.png')
     ceu = pg.surfarray.array3d(pg.transform.scale(ceu, (360, half_res_vertical*2)))
     floor = pg.surfarray.array3d(pg.image.load('textures/floor2.png'))
-    wall = pg.surfarray.array3d(pg.image.load('textures/greystone.png'))
+    wall = pg.surfarray.array3d(pg.image.load('textures/greystone.jpg'))
     wall2 = pg.surfarray.array3d(pg.image.load('textures/bluestone.png'))
     wall3 = pg.surfarray.array3d(pg.image.load('textures/obg.png'))
-    '''wall4 = pg.surfarray.array3d(pg.image.load('textures/colorstone.png'))
+    '''wall4 = pg.surfarray.array3d(pg.image.load('textures/wood.png'))
     wall5 = pg.surfarray.array3d(pg.image.load('textures/redbrick.png'))
     wall6 = pg.surfarray.array3d(pg.image.load('textures/eagle.png'))'''
 
@@ -109,7 +109,7 @@ def movimentacao(posx, posy, rot, keys):
 def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3):
     for i in range(res_horizontal):
             rot_i = rot + np.deg2rad(i/fov - 30)
-            sin, cos, cos_correcao = np.sin(rot_i), np.cos(rot_i), np.cos(np.deg2rad(i/fov - 30))
+            sin, cos, cos_correcao = np.sin(rot_i), np.cos(rot_i), np.cos(np.deg2rad(i/fov-30))
             frame[i][:] = ceu[int(np.rad2deg(rot_i)%359)][:]/255
 
             for j in range(half_res_vertical):
@@ -145,7 +145,7 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                     h = half_res_vertical - j
                     if x%1<0.015 or x%1>=0.985:
                         xfloor = yfloor
-                    yfloor = np.linspace(0,1000, h*2)%999
+                    yfloor = np.linspace(0,299, h*2)%299
 
                     for k in range(h*2):
                         frame[i][half_res_vertical - h + k] = wall3[xfloor][int(yfloor[k])]/255
@@ -196,9 +196,6 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                     for k in range(h*2):
                         frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
                     break'''
-                   
-
-
     return frame
 
 game()
