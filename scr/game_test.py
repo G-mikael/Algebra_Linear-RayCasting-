@@ -22,7 +22,7 @@ def game():
     #ângulo de visão do jogador
     fov = res_horizontal/60
     #posiçao inicial do jogador
-    posx, posy, rot = 3, 3, 180
+    posx, posy, rot = 3, 3, 10
     
     frame = np.random.uniform(0,1, (res_horizontal, half_res_vertical*2, 3))
 
@@ -32,24 +32,24 @@ def game():
         [1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2], 
         [1,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
         [1,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
-        [1,0,0,0,1,1,3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2,2],
-        [1,0,0,0,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2,2],
+        [1,0,0,0,1,1,3,0,0,0,0,4,0,0,0,4,4,0,0,0,0,0,0,2,2],
+        [1,0,0,0,1,1,2,0,0,0,0,4,0,0,0,4,4,0,0,0,0,0,0,2,2],
         [1,0,0,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
         [1,0,0,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
         [1,0,0,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,2,2],
         [2,0,0,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,2,0,0,0,0,2,2],
         [2,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
-        [2,0,0,0,0,0,0,0,2,1,0,0,0,1,0,0,0,1,2,0,0,0,0,2,2],
+        [2,0,0,0,0,0,0,0,2,1,0,0,0,4,0,0,0,1,2,0,0,0,0,2,2],
         [2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,2,2,2,2],
-        [2,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
-        [2,0,0,0,0,0,0,0,2,1,0,0,0,1,0,0,0,1,2,0,0,0,0,2,2],
+        [2,0,0,0,4,0,0,0,2,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
+        [2,0,0,0,0,0,0,0,2,1,0,0,0,4,0,0,0,1,2,0,0,0,0,2,2],
         [2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
         [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
         [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
-        [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,0,2,2],
-        [1,0,0,2,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
-        [1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
+        [1,0,0,0,0,0,0,0,0,1,0,0,0,4,0,0,0,1,2,0,0,0,0,2,2],
+        [1,0,0,4,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
+        [1,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
         [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,2,2],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2],
@@ -62,8 +62,8 @@ def game():
     wall = pg.surfarray.array3d(pg.image.load('textures/greystone.jpg'))
     wall2 = pg.surfarray.array3d(pg.image.load('textures/bluestone.png'))
     wall3 = pg.surfarray.array3d(pg.image.load('textures/obg.png'))
-    '''wall4 = pg.surfarray.array3d(pg.image.load('textures/wood.png'))
-    wall5 = pg.surfarray.array3d(pg.image.load('textures/redbrick.png'))
+    wall4 = pg.surfarray.array3d(pg.image.load('textures/wood.png'))
+    '''wall5 = pg.surfarray.array3d(pg.image.load('textures/redbrick.png'))
     wall6 = pg.surfarray.array3d(pg.image.load('textures/eagle.png'))'''
 
 
@@ -72,7 +72,7 @@ def game():
             if event.type == pg.QUIT:
                 running = False
         
-        frame = numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3)
+        frame = numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3, wall4)
 
         surf = pg.surfarray.make_surface(frame*255)
         surf = pg.transform.scale(surf, (1280, 720))
@@ -106,7 +106,7 @@ def movimentacao(posx, posy, rot, keys):
 
 #otimizaçao do código usando numba (faz milagre essa porra)
 @njit()
-def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3):
+def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3, wall4):
     for i in range(res_horizontal):
             rot_i = rot + np.deg2rad(i/fov - 30)
             sin, cos, cos_correcao = np.sin(rot_i), np.cos(rot_i), np.cos(np.deg2rad(i/fov-30))
@@ -138,9 +138,8 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                     for k in range(h*2):
                         frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
                     break
-                #Chão 
                 
-                #Geraçao das paredes textura 2    
+                #Geraçao das paredes textura 3    
                 elif mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 3:
                     h = half_res_vertical - j
                     if x%1<0.015 or x%1>=0.985:
@@ -150,52 +149,20 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                     for k in range(h*2):
                         frame[i][half_res_vertical - h + k] = wall3[xfloor][int(yfloor[k])]/255
                     break
-                #Chão 
-                else:
-                    frame[i][half_res_vertical*2-j-1] = floor[xfloor][yfloor]/255
-                #Geraçao das paredes textura 3    
-                '''if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 3:
-                    h = half_res_vertical - j
-                    if x%1<0.1 or x%1>0.9:
-                        xfloor = yfloor
-                    yfloor = np.linspace(0,64, h*2)%64
-
-                    for k in range(h*2):
-                        frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
-                    break
-
-                #Geraçao das paredes textura 3    
-                if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 3:
-                    h = half_res_vertical - j
-                    if x%1<0.1 or x%1>0.9:
-                        xfloor = yfloor
-                    yfloor = np.linspace(0,64, h*2)%64
-
-                    for k in range(h*2):
-                        frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
-                    break
 
                 #Geraçao das paredes textura 4    
                 if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 4:
                     h = half_res_vertical - j
-                    if x%1<0.1 or x%1>0.9:
+                    if x%1<0.015 or x%1>0.985:
                         xfloor = yfloor
-                    yfloor = np.linspace(0,64, h*2)%64
+                    yfloor = np.linspace(0,299, h*2)%299
 
                     for k in range(h*2):
-                        frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
+                        frame[i][half_res_vertical - h + k] = wall4[xfloor][int(yfloor[k])]/255
                     break
-
-                #Geraçao das paredes textura 5    
-                if mapa[int(x)%(tamanho-1)][int(y)%(tamanho-1)] == 5:
-                    h = half_res_vertical - j
-                    if x%1<0.1 or x%1>0.9:
-                        xfloor = yfloor
-                    yfloor = np.linspace(0,64, h*2)%64
-
-                    for k in range(h*2):
-                        frame[i][half_res_vertical - h + k] = wall2[xfloor][int(yfloor[k])]/255
-                    break'''
+                #Chão 
+                else:
+                    frame[i][half_res_vertical*2-j-1] = floor[xfloor][yfloor]/255
     return frame
 
 game()
