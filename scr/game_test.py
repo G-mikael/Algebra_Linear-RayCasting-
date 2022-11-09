@@ -163,6 +163,8 @@ def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_ve
                 #Chão 
                 else:
                     frame[i][half_res_vertical*2-j-1] = floor[xfloor][yfloor]/255
+                
+                print(posx, posy, rot, i, j, k)
     return frame
 
 game()
