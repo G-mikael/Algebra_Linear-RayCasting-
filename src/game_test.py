@@ -104,7 +104,7 @@ def movimentacao(posx, posy, rot, keys):
     
     return posx, posy, rot
 
-#otimizaçao do código usando numba (faz milagre essa porra)
+#otimizaçao do código usando numba
 @njit()
 def numba_frame(floor, ceu, posx, posy, rot, frame, res_horizontal,  half_res_vertical, fov, mapa, tamanho, wall, wall2, wall3, wall4):
     for i in range(res_horizontal):
